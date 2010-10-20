@@ -5,15 +5,23 @@ public abstract class TradeItem {
 	protected BigDecimal buyPrice, sellPrice, storeCosts;
 	
 	public TradeItem(int buy, int sell, int store) {
-		buyPrice = new BigDecimal(buy);
-		sellPrice = new BigDecimal(sell);
-		storeCosts = new BigDecimal(store);
+		buyPrice = p(buy);
+		sellPrice = p(sell);
+		storeCosts = p(store);
 	}
 	
 	public TradeItem(BigDecimal buyPrice, BigDecimal sellPrice, BigDecimal storeCosts){
 		this.buyPrice = buyPrice;
 		this.sellPrice = sellPrice;
 		this.storeCosts = storeCosts;
+	}
+	
+	static public BigDecimal p(int i) {
+		return new BigDecimal(i);
+	}
+	
+	static public BigDecimal p(float i) {
+		return new BigDecimal(i);
 	}
 	
 	public BigDecimal getBuyPrice(){
