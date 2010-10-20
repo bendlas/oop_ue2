@@ -4,6 +4,12 @@ public abstract class TradeItem {
 	
 	protected BigDecimal buyPrice, sellPrice, storeCosts;
 	
+	public TradeItem(int buy, int sell, int store) {
+		buyPrice = new BigDecimal(buy);
+		sellPrice = new BigDecimal(sell);
+		storeCosts = new BigDecimal(store);
+	}
+	
 	public TradeItem(BigDecimal buyPrice, BigDecimal sellPrice, BigDecimal storeCosts){
 		this.buyPrice = buyPrice;
 		this.sellPrice = sellPrice;
