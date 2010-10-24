@@ -39,9 +39,9 @@ public class ProductGroup extends TradeItem {
 		Product cheapestProd = new Product("", "", 0, 0, 0);
 		
 		for(Product p: products){
-			if(p.getBuyPrice() > cheapestPrice){
-				cheapestPrice = p.getBuyPrice();
+			if(p.getBuyPrice().compareTo(cheapestPrice) == -1){
 				cheapestProd = p;
+				cheapestPrice = p.getBuyPrice();
 			}
 		}
 		return cheapestProd;
