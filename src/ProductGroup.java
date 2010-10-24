@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.*;
 
 public class ProductGroup extends TradeItem {
@@ -34,9 +35,16 @@ public class ProductGroup extends TradeItem {
 	}
 	
 	public Product getCheapestProd(){
+		BigDecimal cheapestPrice = new BigDecimal(0);
+		Product cheapestProd = new Product("", "", 0, 0, 0);
 		
-		
-		return null;
+		for(Product p: products){
+			if(p.getBuyPrice() > cheapestPrice){
+				cheapestPrice = p.getBuyPrice();
+				cheapestProd = p;
+			}
+		}
+		return cheapestProd;
 	}
 
 }
