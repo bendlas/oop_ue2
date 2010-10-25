@@ -1,14 +1,13 @@
 import java.math.BigDecimal;
 import java.util.*;
 
-public class ProductGroup extends TradeItem {
+public class ProductGroup{
 	
-	protected Set<Product> products = new HashSet<Product>();
-	protected Set<ProductGroup> subProdGroup = new HashSet<ProductGroup>();
+	private Set<Product> products = new HashSet<Product>();
+	private Set<ProductGroup> subProdGroup = new HashSet<ProductGroup>();
 	public final String name;
 	
-	public ProductGroup(String name, int buy, int sell, int store){
-		super(0,0,0);
+	public ProductGroup(String name){
 		this.name = name;
 	}
 	
@@ -34,17 +33,17 @@ public class ProductGroup extends TradeItem {
 		subProdGroup.remove(pG);
 	}
 	
-	public Product getCheapestProd(){
-		BigDecimal cheapestPrice = new BigDecimal(0);
-		Product cheapestProd = new Product("", "", 0, 0, 0);
-		
-		for(Product p: products){
-			if(p.getBuyPrice().compareTo(cheapestPrice) == -1){
-				cheapestProd = p;
-				cheapestPrice = p.getBuyPrice();
-			}
+	private void getProducts(List<Product> p) {
+		p.addAll(products);
+		for (ProductGroup sub : subProdGroup) {
+			sub.getProducts(p);
 		}
-		return cheapestProd;
 	}
-
+	
+	public List<Product> getSortByPrice() {
+		List<Product> ret = new ArrayList<Product>(products);
+		getProducts(ret);
+		Collections.sort(ret);
+		return ret;
+	}
 }

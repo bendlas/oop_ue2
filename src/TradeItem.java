@@ -1,7 +1,7 @@
 import java.math.BigDecimal;
 
 public abstract class TradeItem {
-	
+		
 	protected BigDecimal buyPrice, sellPrice, storeCosts;
 	
 	public TradeItem(int buy, int sell, int store) {

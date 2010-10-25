@@ -1,12 +1,13 @@
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Company{
-	protected String name; 
-	protected HashSet<Store> stores;
-	protected HashSet<ProductGroup> productGroups;
-	protected HashSet<Configuration> configurations;
-	protected HashSet<Order> activeOrders;
+	private String name; 
+	private Set<Store> stores = new HashSet<Store>();
+	private Set<ProductGroup> productGroups = new HashSet<ProductGroup>();
+	private Set<Configuration> configurations = new HashSet<Configuration>();
+	private Set<Order> activeOrders = new HashSet<Order>();
 
 	public Company(String name){
 		this.name = name;
