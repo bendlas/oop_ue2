@@ -10,9 +10,18 @@ import java.util.Map.Entry;
 
 
 public class Store {
+	private String name;
 	private Map<Product, Integer> store = new HashMap<Product, Integer>();
 	private List<Order> inOrders = new ArrayList<Order>(),
 	                    outOrders = new ArrayList<Order>();
+	
+	public Store(String name){
+		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
+	}
 	
 	//fill the store
 	public void deposit(Product p, int amount) {

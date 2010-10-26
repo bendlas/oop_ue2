@@ -11,6 +11,7 @@ public class ProductGroup{
 		this.name = name;
 	}
 	
+	//TODO @param: instead of Product TradeItem to add Configs?
 	public void setProduct(Product p){
 		products.add(p);
 	}
