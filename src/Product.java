@@ -1,5 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class Product extends TradeItem implements Comparable<Product> {
@@ -10,6 +9,12 @@ public class Product extends TradeItem implements Comparable<Product> {
 		super(buy, sell, store);
 		this.name = name;
 		this.description = description;
+	}
+	
+	public List<Product> getProducts(){
+		List<Product> ret = new ArrayList<Product>();
+		ret.add(this);
+		return ret;
 	}
 	
 	public String toString(){

@@ -1,5 +1,7 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,6 +43,31 @@ public class Configuration extends TradeItem {
 		} else {
 			configurations.put(c, count);
 		}
+	}
+	
+	/*get the Products from this Configuration (the cheapest, if in Productgroup)
+	 */
+	public List<Product> getProducts(){
+		List<Product> ret = new ArrayList<Product>();
+		for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+			for(int i=0; i<entry.getValue(); i++){
+				ret.add(entry.getKey());
+			}
+		}
+		for (Map.Entry<ProductGroup, Integer> entry : productGroups.entrySet()) {
+			for(int i=0; i<entry.getValue(); i++){
+				ret.add(entry.getKey().getSortByPrice().get(0));
+			}
+		}
+		for (Map.Entry<Configuration, Integer> entry : configurations.entrySet()) {
+			for(int i=0; i<entry.getValue(); i++){
+				while(entry.getKey().getProducts().iterator().hasNext()){
+					ret.add(entry.getKey().getProducts().iterator().next());
+				}
+			}
+		}
+		return ret;
+		
 	}
 
 	public String toString(){
