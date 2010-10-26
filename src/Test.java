@@ -11,12 +11,12 @@ public class Test {
 		 * DoItYourself
 		 * - Lager1
 		 * - Lager2
-		 * - Lager3
+		 * - HerwigsTraumland
 		 */
 		Company doItYourself = new Company("DoItYourself");
 		Store s1 = new Store("Lager1");
 		Store s2 = new Store("Lager2");
-		Store s3 = new Store("Lager3");
+		Store s3 = new Store("HerwigsTraumland");
 		doItYourself.addStore(s1);
 		doItYourself.addStore(s2);
 		doItYourself.addStore(s3);
@@ -52,6 +52,8 @@ public class Test {
 		 * 			- PUH345
 		 * 			- ARG789
 		 */
+		
+		//productgroups available
 		ProductGroup comp = new ProductGroup("Computer");
 		ProductGroup monitor = new ProductGroup("Monitor");
 		ProductGroup storage = new ProductGroup("Speicherplatten");
@@ -67,6 +69,7 @@ public class Test {
 		hardDisc.setProdGroup(internalHardDisc);
 		hardDisc.setProdGroup(externalHardDisc);
 		
+		//products available
 		TradeItem t1 = new Product("XTreamGeek", "features everything you can imagine", 700, 1080, 60);
 		TradeItem t2 = new Product("DreamNerdXT", "when the reality doesn't work out", 670, 950, 55);
 		TradeItem t3 = new Product("HyperCipher", "privacy++", 800, 1330, 60);
@@ -106,13 +109,29 @@ public class Test {
 		externalHardDisc.setProduct((Product)t18);
 		externalHardDisc.setProduct((Product)t19);
 		
-		TradeItem t20 = new Configuration("HeroEdition");
-		//t20.addProduct();
+		//build Configurations
+		Configuration t20 = new Configuration("HeroEdition");
+		t20.addTradeItem(t10, 1);
+		t20.addTradeItem(t11, 1);
+		t20.addTradeItem(t7, 3);
+		t20.addTradeItem(t9, 1);
+		t20.addTradeItem(t5, 1);
+		Configuration t21 = new Configuration("Superman");
+		t21.addProductGroup(monitor, 5);
+		Configuration t22 = new Configuration("Wonderwoman");
+		t22.addProductGroup(storage, 3);
 		
 		doItYourself.addProductGroup(comp);
 		doItYourself.addProductGroup(laptop);
 		
-		//s1.deposit(t13, 4);
+		//fill stores
+		s1.deposit((Product)t13, 4);
+		//s2.
+		s3.deposit(t21, 1);
+		
+		
+		//desired amount of product not available for config
+		
 		
 		
 		System.out.println("Works!");

@@ -9,47 +9,46 @@ import java.util.Map.Entry;
 public class Configuration extends TradeItem {
 	public final String name;
 
-	private Map<Product, Integer> products;
+	private Map<TradeItem, Integer> items;
 	private Map<ProductGroup, Integer> productGroups;
-	private Map<Configuration, Integer> configurations;
 
 	public Configuration(String name) {
 		super(0,0,0);
 		this.name = name;
-		products = new HashMap<Product, Integer>();
+		items = new HashMap<TradeItem, Integer>();
 		productGroups = new HashMap<ProductGroup, Integer>();
-		configurations = new HashMap<Configuration, Integer>();
 	}
 	
-	public void addProduct (Product p, int count){
-		if (products.containsKey(p)) {
-			products.put(p, configurations.get(p) + count);
+	//if map already contains trade items the amount of the items is being added
+	public void addTradeItem (TradeItem item, int count){
+		if (items.containsKey(item)) {
+			items.put(item, items.get(item) + count);
 		} else {
-			products.put(p, count);
+			items.put(item, count);
 		}
 	}
 	
 	public void addProductGroup (ProductGroup pg, int count){
 		if (productGroups.containsKey(pg)) {
-			productGroups.put(pg, configurations.get(pg) + count);
+			productGroups.put(pg, items.get(pg) + count);
 		} else {
 			productGroups.put(pg, count);
 		}
 	}
 	
 	public void addConfiguration (Configuration c, int count){
-		if (configurations.containsKey(c)) {
-			configurations.put(c, configurations.get(c) + count);
+		if (items.containsKey(c)) {
+			items.put(c, items.get(c) + count);
 		} else {
-			configurations.put(c, count);
+			items.put(c, count);
 		}
 	}
 	
 	/*get the Products from this Configuration (the cheapest, if in Productgroup)
 	 */
-	public List<Product> getProducts(){
-		List<Product> ret = new ArrayList<Product>();
-		for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+	public List<TradeItem> getTradeItems(){
+		List<TradeItem> ret = new ArrayList<TradeItem>();
+		for (Map.Entry<TradeItem, Integer> entry : items.entrySet()) {
 			for(int i=0; i<entry.getValue(); i++){
 				ret.add(entry.getKey());
 			}
@@ -59,13 +58,6 @@ public class Configuration extends TradeItem {
 				ret.add(entry.getKey().getSortByPrice().get(0));
 			}
 		}
-		for (Map.Entry<Configuration, Integer> entry : configurations.entrySet()) {
-			for(int i=0; i<entry.getValue(); i++){
-				while(entry.getKey().getProducts().iterator().hasNext()){
-					ret.add(entry.getKey().getProducts().iterator().next());
-				}
-			}
-		}
 		return ret;
 		
 	}
@@ -73,14 +65,6 @@ public class Configuration extends TradeItem {
 	public String toString(){
 		StringBuilder productsInGroup = new StringBuilder();
 		StringBuilder ret = new StringBuilder("Konfiguration " + name + " beinhaltet:" + "\n"+ "\n");
-		
-		ret.append("-Konfigurationen: " + "\n");
-		for( Map.Entry<Configuration, Integer> entry : configurations.entrySet() )
-		{
-		  ret.append(entry.getValue()+ "x");
-		  ret.append(entry.getKey().toString());
-		  ret.append("\n");
-		}
 		
 		ret.append("-ProductGroups: " + "\n");
 		for( Map.Entry<ProductGroup, Integer> entry : productGroups.entrySet() )
@@ -93,13 +77,13 @@ public class Configuration extends TradeItem {
 		}
 		
 		ret.append("- Produkte:" + "\n");
-		for( Map.Entry<Product, Integer> entry : products.entrySet() )
+		for( Map.Entry<TradeItem, Integer> entry : items.entrySet() )
 		{
 		  ret.append(entry.getValue()+ "x");
 		  ret.append(entry.getKey().toString());
 		  ret.append("\n");
 		  
-		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefügt
+		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefuegt
 		  ret.append(productsInGroup.toString()); 
 		  ret.append("\n");
 		}
