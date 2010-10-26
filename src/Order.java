@@ -1,16 +1,14 @@
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
-
-public class Order implements Comparable<Order>{
+public class Order implements Comparable<Order> {
 	public final Date orderDate;
 	public final Date targetDate;
 	private Map<TradeItem, Integer> order; 
 	private Store source;
 	private Store destination;
-
+	boolean active = true;
+	
 	
 	public Order(Date target, Map<TradeItem, Integer> order, Store source, Store destination){
 		orderDate = new Date();
@@ -18,23 +16,29 @@ public class Order implements Comparable<Order>{
 		this.order = order;
 		this.source = source;
 		this.destination = destination;
+		source.addOutOrder(this);
+		destination.addInOrder(this);
 	}
-
 	
-	/* so wies jetzt is muss man selber schauen dass die order dem Datum nach ausgeführt werden
-	 * wenn wir wirklich zwischen tatsächlichen & vorhandenen unterscheiden wollen wirds iwie kompliziert ?
-	 * bestellen kann man nur Konfigurationen & einzelne Produkte
+	public void delete() {
+		source.deleteOrder(this);
+		destination.deleteOrder(this);
+		active = false;
+	}
+	
+	/* 
 	 */
 	public void executeOrder(){
-
-		for( Map.Entry<TradeItem, Integer> entry : order.entrySet()){
-			while(entry.getKey().getProducts().iterator().hasNext()){
-				source.withdraw(entry.getKey().getProducts().iterator().next(), entry.getValue());
-				destination.deposit(entry.getKey().getProducts().iterator().next(), entry.getValue());
-			}
+		if (!active) {
+			throw new IllegalStateException("Order "+this+" not active.");
 		}
+		source.withdrawOrder(order);
+		destination.depositOrder(order);
+		delete();
 	}
 
+	/* Orders are sortable by target date
+	 */
 	@Override
 	public int compareTo(Order other) {
 		return targetDate.compareTo(other.targetDate);

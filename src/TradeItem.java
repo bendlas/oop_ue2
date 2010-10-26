@@ -45,9 +45,4 @@ public abstract class TradeItem {
 	public void setStoreCosts(BigDecimal storeC){
 		storeCosts = storeC;
 	}
-	
-	public List<Product> getProducts(){
-		List<Product> ret = new ArrayList<Product>();
-		return ret;
-	}
 }

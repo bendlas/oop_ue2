@@ -56,16 +56,16 @@ public class Test {
 		ProductGroup monitor = new ProductGroup("Monitor");
 		ProductGroup storage = new ProductGroup("Speicherplatten");
 		ProductGroup components = new ProductGroup("Zubehoer");
-		comp.setProdGroup(monitor);
-		comp.setProdGroup(storage);
-		comp.setProdGroup(components);
+		comp.addSubProductGroup(monitor);
+		comp.addSubProductGroup(storage);
+		comp.addSubProductGroup(components);
 		ProductGroup laptop = new ProductGroup("Laptop");
 		ProductGroup hardDisc = new ProductGroup("Festplatten");
 		ProductGroup externalHardDisc = new ProductGroup("externeFestplatten");
 		ProductGroup internalHardDisc = new ProductGroup("interneFestplatten");
-		laptop.setProdGroup(hardDisc);
-		hardDisc.setProdGroup(internalHardDisc);
-		hardDisc.setProdGroup(externalHardDisc);
+		laptop.addSubProductGroup(hardDisc);
+		hardDisc.addSubProductGroup(internalHardDisc);
+		hardDisc.addSubProductGroup(externalHardDisc);
 		
 		TradeItem t1 = new Product("XTreamGeek", "features everything you can imagine", 700, 1080, 60);
 		TradeItem t2 = new Product("DreamNerdXT", "when the reality doesn't work out", 670, 950, 55);

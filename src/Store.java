@@ -1,19 +1,15 @@
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
-
-
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Store {
 	private String name;
-	private Map<Product, Integer> store = new HashMap<Product, Integer>();
-	private List<Order> inOrders = new ArrayList<Order>(),
-	                    outOrders = new ArrayList<Order>();
+	private Map<TradeItem, Integer> store = new HashMap<TradeItem, Integer>();
+	private SortedSet<Order> inOrders = new TreeSet<Order>(),
+	                        outOrders = new TreeSet<Order>();
 	
 	public Store(String name){
 		this.name = name;
@@ -23,21 +19,36 @@ public class Store {
 		return name;
 	}
 	
+	/* Package visible so that Order can call it
+	 */
+	void deleteOrder(Order o) {
+		inOrders.remove(o);
+		outOrders.remove(o);
+	}
+
+	void addInOrder(Order o) {
+		inOrders.add(o);
+	}
+	
+	void addOutOrder(Order o) {
+		outOrders.add(o);
+	}
+	
 	//fill the store
-	public void deposit(Product p, int amount) {
+	public void deposit(TradeItem p, int amount) {
 		if(store.containsKey(p)){
 			amount += store.get(p);
 		}
 		store.put(p, amount);
 	}
 	
-	public void depositOrder(final Map<Product, Integer> added) {
-		for (Entry<Product, Integer> addItem : added.entrySet()) {
+	public void depositOrder(final Map<TradeItem, Integer> added) {
+		for (Entry<TradeItem, Integer> addItem : added.entrySet()) {
 			deposit(addItem.getKey(), addItem.getValue());
 		}
 	}
 	
-	public void withdraw(Product p, int amount) {
+	public void withdraw(TradeItem p, int amount) {
 		int storedAmount = store.get(p);
 		if (storedAmount > amount) {
 			store.put(p, storedAmount - amount);
@@ -48,22 +59,22 @@ public class Store {
 		}
 	}
 	
-	public void withdrawOrder(final Map<Product, Integer> wd) {
-		for (Entry<Product, Integer> it : wd.entrySet()) {
+	public void withdrawOrder(final Map<TradeItem, Integer> wd) {
+		for (Entry<TradeItem, Integer> it : wd.entrySet()) {
 			int storedAmount = store.get(it.getKey());
 			if (storedAmount < it.getValue()) {
 				throw new IllegalArgumentException("Store doesn't contain enough " + it.getKey());				
 			}
 		}
-		for (Entry<Product, Integer> it : wd.entrySet()) {
+		for (Entry<TradeItem, Integer> it : wd.entrySet()) {
 			withdraw(it.getKey(), it.getValue());
 		}
 
 	}
 
-	public Map<Product, Integer> getProductGroup(ProductGroup pg, int amount) {
+	public Map<TradeItem, Integer> getProductGroup(ProductGroup pg, int amount) {
 		// TODO use projected amounts
-		Map<Product, Integer> ret = new HashMap<Product, Integer>();
+		Map<TradeItem, Integer> ret = new HashMap<TradeItem, Integer>();
 		Iterator<Product> pGroupSorted = pg.getSortByPrice().iterator();
 		while (pGroupSorted.hasNext() && amount > 0) {
 			Product p = pGroupSorted.next();
@@ -78,7 +89,7 @@ public class Store {
 		return ret;
 	}
 	
-	public int getAmount(Product p) {
+	public int getAmount(TradeItem p) {
 		//TODO get projected amount
 		Integer s = store.get(p);
 		if (s == null) {

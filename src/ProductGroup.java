@@ -1,5 +1,8 @@
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ProductGroup{
 	
@@ -16,7 +19,7 @@ public class ProductGroup{
 		products.add(p);
 	}
 	
-	public void setProdGroup(ProductGroup pG){
+	public void addSubProductGroup(ProductGroup pG){
 		subProdGroup.add(pG);
 	}
 	

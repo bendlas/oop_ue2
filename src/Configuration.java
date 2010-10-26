@@ -1,9 +1,7 @@
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 
 public class Configuration extends TradeItem {
@@ -99,7 +97,7 @@ public class Configuration extends TradeItem {
 		  ret.append(entry.getKey().toString());
 		  ret.append("\n");
 		  
-		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefügt
+		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefÃ¼gt
 		  ret.append(productsInGroup.toString()); 
 		  ret.append("\n");
 		}
