@@ -42,52 +42,16 @@ public class Configuration extends TradeItem {
 			configurations.put(c, count);
 		}
 	}
-	/*
-	public void buildConfig(){
-		if (!checkConfig()) {
-			System.out.println("Die Konfiguration " + name + " " +
-			"konnte nicht zusammengestellt werden - " +
-			"fehlende Komponenten" + "\n");
-			return;
-		}
-		for(Entry<Product, Integer> entry : configurations.entrySet()){
-			Product p = entry.getKey();
-			int amount = entry.getValue();
-			p.decreaseStock(amount);
-		}
-	}
 
-		private boolean checkConfig() {
-			return countConfig() > 0;
-		} 
-	
-	private int countConfig(){
-		int count = Integer.MAX_VALUE;
-		for(Entry<Product, Integer> entry : configurations.entrySet()){
-			Product p = entry.getKey();
-			int amount = entry.getValue();
-			count = Math.min(count, p.getStock() / amount);
-		}
-		return count;
-	}
-	
-*/
 	public String toString(){
+		StringBuilder productsInGroup = new StringBuilder();
 		StringBuilder ret = new StringBuilder("Konfiguration " + name + " beinhaltet:" + "\n"+ "\n");
-		//  recurse through products and confs
-		ret.append("- Produkte:" + "\n");
-		for( Map.Entry<Product, Integer> entry : products.entrySet() )
-		{
-		  ret.append(entry.getValue()+ "x");
-		  ret.append(entry.toString());
-		  ret.append("\n");
-		}
 		
 		ret.append("-Konfigurationen: " + "\n");
 		for( Map.Entry<Configuration, Integer> entry : configurations.entrySet() )
 		{
 		  ret.append(entry.getValue()+ "x");
-		  ret.append(entry.toString());
+		  ret.append(entry.getKey().toString());
 		  ret.append("\n");
 		}
 		
@@ -95,7 +59,21 @@ public class Configuration extends TradeItem {
 		for( Map.Entry<ProductGroup, Integer> entry : productGroups.entrySet() )
 		{
 		  ret.append(entry.getValue()+ "x");
-		  ret.append(entry.toString());
+		  ret.append(entry.getKey().toString());
+		  ret.append("\n");
+		  
+		  productsInGroup.append(entry.getKey().toString(true) + "\n");
+		}
+		
+		ret.append("- Produkte:" + "\n");
+		for( Map.Entry<Product, Integer> entry : products.entrySet() )
+		{
+		  ret.append(entry.getValue()+ "x");
+		  ret.append(entry.getKey().toString());
+		  ret.append("\n");
+		  
+		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefügt
+		  ret.append(productsInGroup.toString()); 
 		  ret.append("\n");
 		}
 

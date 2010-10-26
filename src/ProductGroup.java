@@ -46,4 +46,34 @@ public class ProductGroup{
 		Collections.sort(ret);
 		return ret;
 	}
+	
+
+	protected Set<Product> getProductsFromTree(Set<Product> prodSet) {
+		prodSet.addAll(products);
+
+		for (ProductGroup pg : subProdGroup) {
+		pg.getProductsFromTree(prodSet);
+		}
+		return prodSet;
+		}
+
+	public String toString(boolean printProducts){
+		StringBuilder buf = new StringBuilder();
+		Set<Product> pset = getProductsFromTree(new HashSet<Product>());
+		
+/*		buf.append("Die Produktgruppe ");
+		buf.append(name);
+		buf.append(" beinhaltet:\n");
+*/		
+		for (Product p : pset) {
+			buf.append(p.toString());
+			buf.append('\n');
+		}
+		return buf.toString();
+	}
+		
+	public String toString(){
+		return name;
+	}
+		
 }
