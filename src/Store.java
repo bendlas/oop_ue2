@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.TreeSet;
 
 public class Store {
 	private String name;
-	private Map<TradeItem, Integer> store = new HashMap<TradeItem, Integer>();
+	private ItemCollection store = new ItemCollection();
 	private SortedSet<Order> inOrders = new TreeSet<Order>(),
 	                        outOrders = new TreeSet<Order>();
 	
@@ -42,7 +43,7 @@ public class Store {
 		store.put(p, amount);
 	}
 	
-	public void depositOrder(final Map<TradeItem, Integer> added) {
+	public void deposit(ItemCollection added) {
 		for (Entry<TradeItem, Integer> addItem : added.entrySet()) {
 			deposit(addItem.getKey(), addItem.getValue());
 		}
@@ -59,7 +60,7 @@ public class Store {
 		}
 	}
 	
-	public void withdrawOrder(final Map<TradeItem, Integer> wd) {
+	public void withdraw(ItemCollection wd) {
 		for (Entry<TradeItem, Integer> it : wd.entrySet()) {
 			int storedAmount = store.get(it.getKey());
 			if (storedAmount < it.getValue()) {
@@ -72,9 +73,9 @@ public class Store {
 
 	}
 
-	public Map<TradeItem, Integer> getProductGroup(ProductGroup pg, int amount) {
+	public ItemCollection getProductGroup(ProductGroup pg, int amount) throws Error {
 		// TODO use projected amounts
-		Map<TradeItem, Integer> ret = new HashMap<TradeItem, Integer>();
+		ItemCollection ret = new ItemCollection();
 		Iterator<Product> pGroupSorted = pg.getSortByPrice().iterator();
 		while (pGroupSorted.hasNext() && amount > 0) {
 			Product p = pGroupSorted.next();
@@ -84,9 +85,18 @@ public class Store {
 			amount -= useAmount;
 		}
 		if (amount > 0) {
-			
+			return null;
 		}
 		return ret;
+	}
+	
+	public int getAmount(TradeItem p, Date d) {
+		ItemCollection future = (ItemCollection) store.clone();
+		Iterator<Order> in = inOrders.iterator();
+		for(Order o=in.next(); o.targetDate.compareTo(d) <= 0; o=in.next()) {
+			
+		}
+		return 0;
 	}
 	
 	public int getAmount(TradeItem p) {

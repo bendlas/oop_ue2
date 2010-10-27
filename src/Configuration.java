@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 public class Configuration extends TradeItem {
@@ -41,23 +42,43 @@ public class Configuration extends TradeItem {
 			items.put(c, count);
 		}
 	}
-	
-	/*get the Products from this Configuration (the cheapest, if in Productgroup)
-	 */
-	public List<TradeItem> getTradeItems(){
-		List<TradeItem> ret = new ArrayList<TradeItem>();
-		for (Map.Entry<TradeItem, Integer> entry : items.entrySet()) {
-			for(int i=0; i<entry.getValue(); i++){
-				ret.add(entry.getKey());
+
+	public ItemCollection checkItems(Store s, Integer amount) {
+		ItemCollection ret = new ItemCollection();
+		for (Entry<TradeItem, Integer> e : items.entrySet()) {
+			TradeItem item = e.getKey();
+			Integer i = e.getValue();
+			int storedAmount = s.getAmount(item);
+			ret.mergeInto(item, storedAmount);
+			if (storedAmount < i) {
+				if (item instanceof Configuration) {
+					ItemCollection subItems = ((Configuration) item).checkItems(s, i - storedAmount);
+					if (subItems == null) { return null; }
+					ret.mergeInto(subItems);
+				} else {
+					return null;
+				}
 			}
 		}
-		for (Map.Entry<ProductGroup, Integer> entry : productGroups.entrySet()) {
-			for(int i=0; i<entry.getValue(); i++){
-				ret.add(entry.getKey().getSortByPrice().get(0));
-			}
+		for (Entry<ProductGroup, Integer> e : productGroups.entrySet()) {
+			ItemCollection groupParts = s.getProductGroup(e.getKey(), e.getValue());
+			if (groupParts == null) { return null; }
+			ret.mergeInto(groupParts);
 		}
 		return ret;
-		
+	}
+	
+	/* Build configuration with Items from Store
+	 * and store it back if some subconfiguration isn't stored,
+	 * it will be built too.
+	 */
+	public void buildConfiguration(Store s) {
+		ItemCollection parts = checkItems(s, 1);
+		if (parts == null) {
+			throw new IllegalArgumentException("Store has not enough parts");
+		}
+		s.withdraw(parts);
+		s.deposit(this, 1);
 	}
 
 	public String toString(){
