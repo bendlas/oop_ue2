@@ -1,6 +1,6 @@
-import java.util.*;
 
-
+/* comparable by difference of sell, store price
+ */
 public class Product extends TradeItem implements Comparable<Product> {
 	public final String name;
 	public final String description;
@@ -9,12 +9,6 @@ public class Product extends TradeItem implements Comparable<Product> {
 		super(buy, sell, store);
 		this.name = name;
 		this.description = description;
-	}
-	
-	public List<Product> getProducts(){
-		List<Product> ret = new ArrayList<Product>();
-		ret.add(this);
-		return ret;
 	}
 	
 	public String toString(){

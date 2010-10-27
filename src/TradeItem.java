@@ -1,6 +1,10 @@
 import java.math.BigDecimal;
-import java.util.*;
 
+/* Base class for Products and Configurations
+ * Abstracting buy, store and sell costs
+ * ItemCollection is the Container for it through the program
+ * Uses exact numbers for prizes
+ */
 public abstract class TradeItem {
 		
 	protected BigDecimal buyPrice, sellPrice, storeCosts;

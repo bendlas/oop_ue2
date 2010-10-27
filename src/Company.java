@@ -2,12 +2,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/* Super object
+ * serves as a catalog for ProductGroups, Stores, Products, Configurations
+ */
 public class Company{
-	private String name; 
+	public final String name; 
 	private Set<Store> stores = new HashSet<Store>();
 	private Set<ProductGroup> productGroups = new HashSet<ProductGroup>();
-	private Set<Configuration> configurations = new HashSet<Configuration>();
-	private Set<Order> activeOrders = new HashSet<Order>();
+	private Set<TradeItem> items = new HashSet<TradeItem>();
 
 	public Company(String name){
 		this.name = name;
@@ -20,7 +22,7 @@ public class Company{
 		productGroups.add(pg);
 	}
 	public void addConfiguration(Configuration c){
-		configurations.add(c);
+		items.add(c);
 	}
 	
 	public void removeStore(Store s){
@@ -30,18 +32,11 @@ public class Company{
 		productGroups.remove(pg);
 	}
 	public void removeConfiguration(Configuration c){
-		configurations.remove(c);
+		items.remove(c);
 	}
 	
-	public void addActiveOrder(Order o){
-		activeOrders.add(o);
-	}
-	public void removeActiveOrder(Order o){
-		activeOrders.remove(o);
-	}
-	
-	public String activeOrdersToString(){
-		Iterator<Order> i= activeOrders.iterator();
+	public String itemsToString(){
+		Iterator<TradeItem> i= items.iterator();
 		StringBuilder out = new StringBuilder();
 		while(i.hasNext()){
 			out.append(i.next().toString());
@@ -50,17 +45,7 @@ public class Company{
 		return out.toString();
 	}
 	
-	public String configurationsToString(){
-		Iterator<Configuration> i= configurations.iterator();
-		StringBuilder out = new StringBuilder();
-		while(i.hasNext()){
-			out.append(i.next().toString());
-			out.append("\n");
-		}
-		return out.toString();
-	}
-	
-	public String productGroupToString(){
+	public String productGroupsToString(){
 		Iterator<ProductGroup> i= productGroups.iterator();
 		StringBuilder out = new StringBuilder();
 		while(i.hasNext()){

@@ -8,23 +8,19 @@ import java.util.Map.Entry;
 public class Configuration extends TradeItem {
 	public final String name;
 
-	private Map<TradeItem, Integer> items;
+	private ItemCollection items;
 	private Map<ProductGroup, Integer> productGroups;
 
 	public Configuration(String name) {
 		super(0,0,0);
 		this.name = name;
-		items = new HashMap<TradeItem, Integer>();
+		items = new ItemCollection();
 		productGroups = new HashMap<ProductGroup, Integer>();
 	}
 	
 	//if map already contains trade items the amount of the items is being added
 	public void addTradeItem (TradeItem item, int count){
-		if (items.containsKey(item)) {
-			items.put(item, items.get(item) + count);
-		} else {
-			items.put(item, count);
-		}
+		items.deposit(item, count);
 	}
 	
 	public void addProductGroup (ProductGroup pg, int count){
@@ -32,14 +28,6 @@ public class Configuration extends TradeItem {
 			productGroups.put(pg, items.get(pg) + count);
 		} else {
 			productGroups.put(pg, count);
-		}
-	}
-	
-	public void addConfiguration (Configuration c, int count){
-		if (items.containsKey(c)) {
-			items.put(c, items.get(c) + count);
-		} else {
-			items.put(c, count);
 		}
 	}
 
@@ -86,7 +74,7 @@ public class Configuration extends TradeItem {
 		StringBuilder ret = new StringBuilder("Konfiguration " + name + " beinhaltet:" + "\n"+ "\n");
 		
 		ret.append("-ProductGroups: " + "\n");
-		for( Map.Entry<ProductGroup, Integer> entry : productGroups.entrySet() )
+		for( Entry<ProductGroup, Integer> entry : productGroups.entrySet() )
 		{
 		  ret.append(entry.getValue()+ "x");
 		  ret.append(entry.getKey().toString());
@@ -96,7 +84,7 @@ public class Configuration extends TradeItem {
 		}
 		
 		ret.append("- Produkte:" + "\n");
-		for( Map.Entry<TradeItem, Integer> entry : items.entrySet() )
+		for( Entry<TradeItem, Integer> entry : items.entrySet() )
 		{
 		  ret.append(entry.getValue()+ "x");
 		  ret.append(entry.getKey().toString());
