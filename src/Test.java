@@ -129,7 +129,7 @@ public class Test {
 		doItYourself.addProductGroup(laptop);
 		
 		//fill stores
-		/*
+		/* deposit @ startup:
 		 * s1:
 		 * - laptop t13, 4
 		 * - laptop t14, 3
@@ -181,31 +181,32 @@ public class Test {
 		s3.deposit(t19, 5); //external harddisc
 		s3.deposit(t5, 3); //monitor
 		
-		Map<TradeItem, Integer> order1 = new HashMap<TradeItem, Integer>();
+		ItemCollection order1 = new ItemCollection();
 		order1.put(t20, 3);
 		Order o1 = new Order(new Date(20100311), order1, s2, s2); //available
 		o1.executeOrder();
 		o1.delete();
 		
-		Map<TradeItem, Integer> order2 = new HashMap<TradeItem, Integer>();
+		ItemCollection order2 = new ItemCollection();
 		order2.put(t21, 1);
 		Order o2 = new Order(new Date(20100311), order2, s3, s3); //available
 		o2.executeOrder();
 		o2.delete();
 		
-		Map<TradeItem, Integer> order3 = new HashMap<TradeItem, Integer>();
+		ItemCollection order3 = new ItemCollection();
 		order3.put(t20, 2);
 		Order o3 = new Order(new Date(20100311), order2, s2, s2); //available by end of day
 		o3.executeOrder();
 		
-		s2.deposit(t20, 4); //by end of day, 3 left
+		s2.deposit(t20, 4); //by end of day 3 left
 		o3.delete();
 				
-		Map<TradeItem, Integer> order4 = new HashMap<TradeItem, Integer>();
+		ItemCollection order4 = new ItemCollection();
 		order4.put(t22, 4);
-		Order o4 = new Order(new Date(20100311), order2, s3, s3);
+		Order o4 = new Order(new Date(20100311), order2, s1, s3);
 		o4.executeOrder();
 		
+		System.out.println("Works?");
 		System.out.println("Works!");
 		
 		
