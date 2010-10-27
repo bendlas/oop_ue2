@@ -1,3 +1,7 @@
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Test {
 
@@ -125,14 +129,82 @@ public class Test {
 		doItYourself.addProductGroup(laptop);
 		
 		//fill stores
-		s1.deposit((Product)t13, 4);
-		//s2.
-		s3.deposit(t21, 1);
+		/*
+		 * s1:
+		 * - laptop t13, 4
+		 * - laptop t14, 3
+		 * - laptop t15, 3
+		 * - monitor t4, 6
+		 * - monitor t6, 4
+		 * - internalHarddisc t17, 2
+		 * - pG storage t22, 5
+		 * s2:
+		 * - comp t1, 3
+		 * - comp t2, 3
+		 * - comp t3, 3
+		 * - monitor t5, 6
+		 * - mouse t11, 7
+		 * - internalHarddisc t16, 4
+		 * - config t20, 4
+		 * s3:
+		 * - pG monitor t21, 1
+		 * - keyboard t10, 4
+		 * - rom t8, 3
+		 * - ram t7, 5
+		 * - cache t9, 7
+		 * - coolingSystem t12, 5
+		 * - externalHarddisc t18, 5
+		 * - externalHarddisc t19, 5
+		 * - monitor t5, 3
+		 */
+		s1.deposit(t13, 4); //laptop
+		s1.deposit(t14, 3); //laptop
+		s1.deposit(t15, 3); //laptop
+		s1.deposit(t4, 6); //monitor
+		s1.deposit(t6, 4); //monitor
+		s1.deposit(t17, 2); //internal harddisc
+		s1.deposit(t22, 5); //config: pG storage
+		s2.deposit(t1, 3); //comp
+		s2.deposit(t2, 3); //comp
+		s2.deposit(t3, 3); //comp
+		s2.deposit(t5, 6); //monitor
+		s2.deposit(t11, 7); //mouse
+		s2.deposit(t16, 4); //internal harddisc
+		s2.deposit(t20, 4); //config: 5, 7, 9, 10, 11
+		s3.deposit(t21, 1); //config: pG monitor
+		s3.deposit(t10, 4); //keyboard
+		s3.deposit(t8, 3); //Rom
+		s3.deposit(t7, 5); //Ram
+		s3.deposit(t9, 7); //Cache
+		s3.deposit(t12, 5); //cooling system
+		s3.deposit(t18, 5); //external harddisc
+		s3.deposit(t19, 5); //external harddisc
+		s3.deposit(t5, 3); //monitor
 		
+		Map<TradeItem, Integer> order1 = new HashMap<TradeItem, Integer>();
+		order1.put(t20, 3);
+		Order o1 = new Order(new Date(20100311), order1, s2, s2); //available
+		o1.executeOrder();
+		o1.delete();
 		
-		//desired amount of product not available for config
+		Map<TradeItem, Integer> order2 = new HashMap<TradeItem, Integer>();
+		order2.put(t21, 1);
+		Order o2 = new Order(new Date(20100311), order2, s3, s3); //available
+		o2.executeOrder();
+		o2.delete();
 		
+		Map<TradeItem, Integer> order3 = new HashMap<TradeItem, Integer>();
+		order3.put(t20, 2);
+		Order o3 = new Order(new Date(20100311), order2, s2, s2); //available by end of day
+		o3.executeOrder();
 		
+		s2.deposit(t20, 4); //by end of day, 3 left
+		o3.delete();
+				
+		Map<TradeItem, Integer> order4 = new HashMap<TradeItem, Integer>();
+		order4.put(t22, 4);
+		Order o4 = new Order(new Date(20100311), order2, s3, s3);
+		o4.executeOrder();
 		
 		System.out.println("Works!");
 		
