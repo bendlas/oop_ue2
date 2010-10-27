@@ -6,9 +6,8 @@ import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Store {
+public class Store extends ItemCollection {
 	private String name;
-	private ItemCollection store = new ItemCollection();
 	private SortedSet<Order> inOrders = new TreeSet<Order>(),
 	                        outOrders = new TreeSet<Order>();
 	
@@ -34,44 +33,6 @@ public class Store {
 	void addOutOrder(Order o) {
 		outOrders.add(o);
 	}
-	
-	//fill the store
-	public void deposit(TradeItem p, int amount) {
-		if(store.containsKey(p)){
-			amount += store.get(p);
-		}
-		store.put(p, amount);
-	}
-	
-	public void deposit(ItemCollection added) {
-		for (Entry<TradeItem, Integer> addItem : added.entrySet()) {
-			deposit(addItem.getKey(), addItem.getValue());
-		}
-	}
-	
-	public void withdraw(TradeItem p, int amount) {
-		int storedAmount = store.get(p);
-		if (storedAmount > amount) {
-			store.put(p, storedAmount - amount);
-		} else if (storedAmount == amount) {
-			store.remove(p);
-		} else {
-			throw new IllegalArgumentException("Store doesn't contain enough " + p);
-		}
-	}
-	
-	public void withdraw(ItemCollection wd) {
-		for (Entry<TradeItem, Integer> it : wd.entrySet()) {
-			int storedAmount = store.get(it.getKey());
-			if (storedAmount < it.getValue()) {
-				throw new IllegalArgumentException("Store doesn't contain enough " + it.getKey());				
-			}
-		}
-		for (Entry<TradeItem, Integer> it : wd.entrySet()) {
-			withdraw(it.getKey(), it.getValue());
-		}
-
-	}
 
 	public ItemCollection getProductGroup(ProductGroup pg, int amount) throws Error {
 		// TODO use projected amounts
@@ -91,17 +52,17 @@ public class Store {
 	}
 	
 	public int getAmount(TradeItem p, Date d) {
-		ItemCollection future = (ItemCollection) store.clone();
+		ItemCollection future = new ItemCollection(this);
 		Iterator<Order> in = inOrders.iterator();
 		for(Order o=in.next(); o.targetDate.compareTo(d) <= 0; o=in.next()) {
-			
+
 		}
 		return 0;
 	}
 	
 	public int getAmount(TradeItem p) {
 		//TODO get projected amount
-		Integer s = store.get(p);
+		Integer s = get(p);
 		if (s == null) {
 			return 0;
 		} else {

@@ -49,12 +49,12 @@ public class Configuration extends TradeItem {
 			TradeItem item = e.getKey();
 			Integer i = e.getValue();
 			int storedAmount = s.getAmount(item);
-			ret.mergeInto(item, storedAmount);
+			ret.deposit(item, storedAmount);
 			if (storedAmount < i) {
 				if (item instanceof Configuration) {
 					ItemCollection subItems = ((Configuration) item).checkItems(s, i - storedAmount);
 					if (subItems == null) { return null; }
-					ret.mergeInto(subItems);
+					ret.deposit(subItems);
 				} else {
 					return null;
 				}
@@ -63,7 +63,7 @@ public class Configuration extends TradeItem {
 		for (Entry<ProductGroup, Integer> e : productGroups.entrySet()) {
 			ItemCollection groupParts = s.getProductGroup(e.getKey(), e.getValue());
 			if (groupParts == null) { return null; }
-			ret.mergeInto(groupParts);
+			ret.deposit(groupParts);
 		}
 		return ret;
 	}
