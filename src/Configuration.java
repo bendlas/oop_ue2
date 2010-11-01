@@ -18,11 +18,16 @@ public class Configuration extends TradeItem {
 		productGroups = new HashMap<ProductGroup, Integer>();
 	}
 	
-	//if map already contains trade items the amount of the items is being added
+
+	
+	//Postcondition: adds a TradeItem in the specified amount to the Configuration
 	public void addTradeItem (TradeItem item, int count){
 		items.deposit(item, count);
 	}
 	
+	
+	//Postcondition: adds Product to ProductGroup, if this product is 
+	//already in the group, the amount is raised.
 	public void addProductGroup (ProductGroup pg, int count){
 		if (productGroups.containsKey(pg)) {
 			productGroups.put(pg, items.get(pg) + count);
@@ -30,7 +35,10 @@ public class Configuration extends TradeItem {
 			productGroups.put(pg, count);
 		}
 	}
-
+	
+	//Precondition: returns itemcollection if configuration is in store, otherwise: null
+	//Postcondition: lookup if there enough parts in the store in order to build this config
+	//if not>>return null
 	public ItemCollection checkItems(Store s, Integer amount) {
 		ItemCollection ret = new ItemCollection();
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
@@ -60,6 +68,10 @@ public class Configuration extends TradeItem {
 	 * and store it back if some subconfiguration isn't stored,
 	 * it will be built too.
 	 */
+	
+	//Precondition: 
+	//Postcondition: if theres enough parts, configuration is built.
+	//otherwise IAE
 	public void buildConfiguration(Store s) {
 		ItemCollection parts = checkItems(s, 1);
 		if (parts == null) {
@@ -69,6 +81,9 @@ public class Configuration extends TradeItem {
 		s.deposit(this, 1);
 	}
 
+	//
+	//Postcondition: return all Products in this configuration, including productgroups
+	//BAD: doesnt show explicit, which products are in which sub-ProductGroups
 	public String toString(){
 		StringBuilder productsInGroup = new StringBuilder();
 		StringBuilder ret = new StringBuilder("Konfiguration " + name + " beinhaltet:" + "\n"+ "\n");
@@ -90,7 +105,7 @@ public class Configuration extends TradeItem {
 		  ret.append(entry.getKey().toString());
 		  ret.append("\n");
 		  
-		  //hab jetzt auch die Produkte in den Gruppen als Produkte hinzugefügt
+
 		  ret.append(productsInGroup.toString()); 
 		  ret.append("\n");
 		}

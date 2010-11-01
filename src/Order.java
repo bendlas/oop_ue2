@@ -15,6 +15,8 @@ public class Order implements Comparable<Order> {
 	private Store destination;
 	private boolean active = true;
 	
+	//Invariable: orderDate = current Date
+	//Postcondition: sets up a new order, with date, items, and a source and target store
 	public Order(Date target, ItemCollection order, Store source, Store destination){
 		orderDate = new Date();
 		targetDate = target;
@@ -26,10 +28,16 @@ public class Order implements Comparable<Order> {
 		destination.addInOrder(this);
 	}
 
+	//postcondition: returns if this order is active
 	public boolean getActive() {return active;}
 	
 	/* set order to inactive
 	 */
+	
+	//Precondition: requires this order to be in source and target store
+	//Postcondition: deletes this order in the source and target store & sets it inactive
+	//BAD: no test if order is already inactive, or exceptoin handling
+	//in case its double deleted, or a store is deleted
 	public void delete() {
 		source.deleteOrder(this);
 		destination.deleteOrder(this);
@@ -38,6 +46,11 @@ public class Order implements Comparable<Order> {
 	
 	/* make the transaction from one source to target
 	 */
+	
+	//Precondition requires the order to be in 2 (existing) stores
+	//if this order is not active IAE
+	//Postcondition: if this order is active >> removes the items from the source store
+	//and add them in the target store
 	public void executeOrder(){
 		if (!active) {
 			throw new IllegalStateException("Order "+this+" not active.");
@@ -50,10 +63,13 @@ public class Order implements Comparable<Order> {
 	/* Orders are sortable by target date
 	 */
 	@Override
+	
+	//Postcondition: returns the difference to another date as an Integer
 	public int compareTo(Order other) {
 		return targetDate.compareTo(other.targetDate);
 	}
 	
+	//Postcondition: return IAE if the TradeItem is not available at target Date
 	private void check() {
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
 			if(e.getValue() > source.getAmount(e.getKey(), targetDate)){
