@@ -1,6 +1,8 @@
 
 /* comparable by difference of sell, store price
  */
+
+//LOFO
 public class Product extends TradeItem implements Comparable<Product> {
 	public final String name;
 	public final String description;

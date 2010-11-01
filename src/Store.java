@@ -6,12 +6,15 @@ import java.util.TreeSet;
 /* A Collection of TradeItems with Orders
  * Orders are used to project amounts
  */
+
+//TODO: fill in pre, post and in
 public class Store extends ItemCollection {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
 	
 	// pending incoming and outgoing orders sorted by date
+	
 	private SortedSet<Order> inOrders = new TreeSet<Order>(),
 	                        outOrders = new TreeSet<Order>();
 	
