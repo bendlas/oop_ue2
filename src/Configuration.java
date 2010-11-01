@@ -19,13 +19,13 @@ public class Configuration extends TradeItem {
 	}
 	
 
-	
+	//Precondition: TradeItem is valid
 	//Postcondition: adds a TradeItem in the specified amount to the Configuration
 	public void addTradeItem (TradeItem item, int count){
 		items.deposit(item, count);
 	}
 	
-	
+	//Precondition: Productgroup pg exists
 	//Postcondition: adds Product to ProductGroup, if this product is 
 	//already in the group, the amount is raised.
 	public void addProductGroup (ProductGroup pg, int count){
@@ -36,7 +36,7 @@ public class Configuration extends TradeItem {
 		}
 	}
 	
-	//Precondition: returns itemcollection if configuration is in store, otherwise: null
+	//Precondition: returns itemcollection if configuration is in store, otherwise: null, Store exists
 	//Postcondition: lookup if there enough parts in the store in order to build this config
 	//if not>>return null
 	public ItemCollection checkItems(Store s, Integer amount) {
@@ -69,7 +69,7 @@ public class Configuration extends TradeItem {
 	 * it will be built too.
 	 */
 	
-	//Precondition: 
+	//Precondition: Store s exists
 	//Postcondition: if theres enough parts, configuration is built.
 	//otherwise IAE
 	public void buildConfiguration(Store s) {
@@ -81,7 +81,7 @@ public class Configuration extends TradeItem {
 		s.deposit(this, 1);
 	}
 
-	//
+	//TODO: solllen wir uns noch genauer anschauen: - was?
 	//Postcondition: return all Products in this configuration, including productgroups
 	//BAD: doesnt show explicit, which products are in which sub-ProductGroups
 	public String toString(){

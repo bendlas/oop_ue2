@@ -17,6 +17,7 @@ public class Order implements Comparable<Order> {
 	private Store destination;
 	private boolean active = true;
 	
+	//Precondition: all given Variables are valid
 	//Invariable: orderDate = current Date
 	//Postcondition: sets up a new order, with date, items, and a source and target store
 	public Order(Date target, ItemCollection order, Store source, Store destination){
@@ -66,6 +67,7 @@ public class Order implements Comparable<Order> {
 	 */
 	@Override
 	
+	//Precondition: Order "other" is valid
 	//Postcondition: returns the difference to another date as an Integer
 	public int compareTo(Order other) {
 		return targetDate.compareTo(other.targetDate);
