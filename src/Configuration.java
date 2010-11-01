@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
+//LOFO
 public class Configuration extends TradeItem {
 	public final String name;
 

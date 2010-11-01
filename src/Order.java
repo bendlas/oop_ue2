@@ -3,6 +3,8 @@ import java.util.Map.Entry;
 
 /* Represents a transaction of TradeItems at a specified point in time
  */
+
+//LOFO
 public class Order implements Comparable<Order> {
 	// set to now by constructor
 	public final Date orderDate;

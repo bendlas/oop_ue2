@@ -2,7 +2,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//TODO: remove comments
 public class Test {
 
 	/**
@@ -28,7 +28,7 @@ public class Test {
 		 * DoItYourself
 		 * - Lager1
 		 * - Lager2
-		 * - HerwigsTraumland
+		 * - HTL
 		 */
 		Company doItYourself = new Company("DoItYourself");
 		pr("Creating 3 Stores");
