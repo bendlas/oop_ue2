@@ -20,6 +20,7 @@ public class Order implements Comparable<Order> {
 	//Precondition: all given Variables are valid
 	//Invariable: orderDate = current Date
 	//Postcondition: sets up a new order, with date, items, and a source and target store
+
 	public Order(Date target, ItemCollection order, Store source, Store destination){
 		orderDate = new Date();
 		targetDate = target;
@@ -54,6 +55,9 @@ public class Order implements Comparable<Order> {
 	//if this order is not active IAE
 	//Postcondition: if this order is active >> removes the items from the source store
 	//and add them in the target store
+	
+	//GOOD: is simply made by using the customized Item collection, otherwise it would have been
+	//more complex to get out the products from the configurations, etc.
 	public void executeOrder(){
 		if (!active) {
 			throw new IllegalStateException("Order "+this+" not active.");

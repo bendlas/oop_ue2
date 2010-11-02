@@ -13,6 +13,7 @@ public abstract class TradeItem {
 	/*postcondition: Type of buy, sell and store is BigDecimal;
 					 all prices are set
 					 */
+	//GOOD: prices for all TradeItems are calculated & stored in  BigDecimal to guarantee a correct amount
 	public TradeItem(int buy, int sell, int store) {
 		buyPrice = p(buy);
 		sellPrice = p(sell);

@@ -51,7 +51,7 @@ public class ProductGroup{
 	}
 
 	//TODO check precond and "good"
-	//Gut: weniger Abhängigkeit durch nicht spezifizierung des Sets
+	//GOOD: weniger Abhängigkeit durch nicht spezifizierung des Sets
 	//precondition: set p is empty
 	//postcondition: all products of the group and those of the subgroup are returned as a set
 	private Set<Product> getProducts(Set<Product> p) {
@@ -73,10 +73,8 @@ public class ProductGroup{
 		return ret;
 	}
 
-	//TODO: where the hell wird printProducts definiert?
-	//TODO: check postcond
-	//precondition: 
-	//postcondition: all products of one productgroup are returned as a string
+	//TODO: check postcond 
+	//postcondition:Override, all products of one productgroup are returned as a string
 	public String toString(boolean printProducts){
 		StringBuilder buf = new StringBuilder();
 		Set<Product> pset = getProducts(new HashSet<Product>());
@@ -87,7 +85,6 @@ public class ProductGroup{
 		return buf.toString();
 	}
 	
-	//precondition: the name of the productgroup is not empty
 	//postcondition: the name of the productgroup is returned
 	public String toString(){
 		return name;

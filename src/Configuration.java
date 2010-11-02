@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-//LOFO
+//
 public class Configuration extends TradeItem {
 	public final String name;
 
@@ -39,6 +39,7 @@ public class Configuration extends TradeItem {
 	//Precondition: returns itemcollection if configuration is in store, otherwise: null, Store exists
 	//Postcondition: lookup if there enough parts in the store in order to build this config
 	//if not>>return null
+	
 	public ItemCollection checkItems(Store s, Integer amount) {
 		ItemCollection ret = new ItemCollection();
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
