@@ -10,7 +10,9 @@ public class Configuration extends TradeItem {
 
 	private ItemCollection items;
 	private Map<ProductGroup, Integer> productGroups;
-
+	
+	//invariance: param string is not empty
+	//postcondition: configurations' name is set
 	public Configuration(String name) {
 		super(0,0,0);
 		this.name = name;
@@ -25,9 +27,9 @@ public class Configuration extends TradeItem {
 		items.deposit(item, count);
 	}
 	
-	//Precondition: Productgroup pg exists
-	//Postcondition: adds Product to ProductGroup, if this product is 
-	//already in the group, the amount is raised.
+	//Precondition: Productgroup pg exists, count >= 0
+	/*Postcondition: adds Product to ProductGroup, if this product is 
+					 already in the group, the amount is raised.*/
 	public void addProductGroup (ProductGroup pg, int count){
 		if (productGroups.containsKey(pg)) {
 			productGroups.put(pg, items.get(pg) + count);
@@ -36,10 +38,17 @@ public class Configuration extends TradeItem {
 		}
 	}
 	
+<<<<<<< HEAD
 	//Precondition: returns itemcollection if configuration is in store, otherwise: null, Store exists
 	//Postcondition: lookup if there enough parts in the store in order to build this config
 	//if not>>return null
 	
+=======
+	//TODO: check
+	//Precondition: store s exists, amount >= 0
+	/*Postcondition: parts for the configuration of store s are returned as itemCollection
+	 				 ONLY if there are enough items in the store to build the config*/
+>>>>>>> 05fefbfd3b29ca0c12c4ac4a20280ad26a2d4d3f
 	public ItemCollection checkItems(Store s, Integer amount) {
 		ItemCollection ret = new ItemCollection();
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
@@ -71,8 +80,8 @@ public class Configuration extends TradeItem {
 	 */
 	
 	//Precondition: Store s exists
-	//Postcondition: if theres enough parts, configuration is built.
-	//otherwise IAE
+	/*Postcondition: only if there's enough parts for it in the store, the configuration is built.
+					 and parts are withdrawed*/
 	public void buildConfiguration(Store s) {
 		ItemCollection parts = checkItems(s, 1);
 		if (parts == null) {
@@ -82,8 +91,9 @@ public class Configuration extends TradeItem {
 		s.deposit(this, 1);
 	}
 
-	//TODO: solllen wir uns noch genauer anschauen: - was?
-	//Postcondition: return all Products in this configuration, including productgroups
+	//TODO: solllen wir uns noch genauer anschauen lt fabian: - was?, check "bad"
+	/*Postcondition: returns all components of the configuration as a string;
+					 components can include: products and productgroups*/
 	//BAD: doesnt show explicit, which products are in which sub-ProductGroups
 	public String toString(){
 		StringBuilder productsInGroup = new StringBuilder();
