@@ -7,9 +7,11 @@ public class Product extends TradeItem implements Comparable<Product> {
 	public final String name;
 	public final String description;
 
+	//TODO: check "good"
 	//Precondition: all Variables are valid
-	//Postcondition: sets up the variables, name, description, converts buy, sell, store 
-	//into BigDecimal, via TradeItem
+	//invariance: name and description are not empty
+	/*postcondition: buyPrice, sellPrice and store costs are set as BigDecimal;
+					 name and description are set*/
 	//GOOD: variables are set to BIGDecimal via the abstract class>>Dynamic Binding
 	public Product(String name, String description, int buy, int sell, int store){
 		super(buy, sell, store);
@@ -17,14 +19,15 @@ public class Product extends TradeItem implements Comparable<Product> {
 		this.description = description;
 	}
 	
+	//precondition: name and description are not empty
 	//Postcondition: returns the name and description as a string
 	public String toString(){
 		return name + ": " + description;
 	}
 
-	@Override
 	//Precondition: product "other" exists
-	//Postcondition: returns the overall price difference between 2 products, as Integer
+	/*Postcondition: the difference between the buyPrices of 2 Products 
+	 * 				 with store costs deducted respectively is returned as int*/
 	public int compareTo(Product other) {
 		return buyPrice.subtract(storeCosts).compareTo(
 				other.buyPrice.subtract(other.storeCosts));

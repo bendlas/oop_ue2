@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 //LOFO
 public class Order implements Comparable<Order> {
-	// set to now by constructor
 	public final Date orderDate;
 	public final Date targetDate;
 	
@@ -17,9 +16,9 @@ public class Order implements Comparable<Order> {
 	private Store destination;
 	private boolean active = true;
 	
-	//Precondition: all given Variables are valid
-	//Invariable: orderDate = current Date
-	//Postcondition: sets up a new order, with date, items, and a source and target store
+	//Precondition: all parameters are valid
+	//Invariance: orderDate and targetDate are valid and >= currentDate
+	//Postcondition: orderDate, targetDate, items, sourceStore, destinationStore are set
 	public Order(Date target, ItemCollection order, Store source, Store destination){
 		orderDate = new Date();
 		targetDate = target;
@@ -31,16 +30,18 @@ public class Order implements Comparable<Order> {
 		destination.addInOrder(this);
 	}
 
-	//postcondition: returns if this order is active
+	//precondition: activeStatus is set true by default;
+	//postcondition: returns true if order is active
 	public boolean getActive() {return active;}
 	
 	/* set order to inactive
 	 */
 	
-	//Precondition: requires this order to be in source and target store
+	//TODO: check bad
+	//Precondition: requires items of this order to be in source and target store
 	//Postcondition: deletes this order in the source and target store & sets it inactive
-	//BAD: no test if order is already inactive, or exceptoin handling
-	//in case its double deleted, or a store is deleted
+	/*BAD: no test if order is already inactive, or exception handling
+		   in case its double deleted, or a store is deleted*/
 	public void delete() {
 		source.deleteOrder(this);
 		destination.deleteOrder(this);
@@ -50,10 +51,10 @@ public class Order implements Comparable<Order> {
 	/* make the transaction from one source to target
 	 */
 	
-	//Precondition requires the order to be in 2 (existing) stores
-	//if this order is not active IAE
-	//Postcondition: if this order is active >> removes the items from the source store
-	//and add them in the target store
+	/*Precondition: requires the order status to be set as active;
+					requires items of order to be in the source store*/
+	/*Postcondition: items are withdrawed from source store and deposited
+					 in destination store and order is deleted*/
 	public void executeOrder(){
 		if (!active) {
 			throw new IllegalStateException("Order "+this+" not active.");
@@ -65,15 +66,17 @@ public class Order implements Comparable<Order> {
 
 	/* Orders are sortable by target date
 	 */
-	@Override
-	
-	//Precondition: Order "other" is valid
-	//Postcondition: returns the difference to another date as an Integer
+	//Precondition: Order "other" and this.date have a valid date
+	/*Postcondition: returns 0 if the 2 dates compared are equal;
+					 returns <0 if date of order "other" is further in the future than ;
+					 returns >0 if date of order "other" is further in the past;*/
+					 
 	public int compareTo(Order other) {
 		return targetDate.compareTo(other.targetDate);
 	}
 	
-	//Postcondition: return IAE if the TradeItem is not available at target Date
+	/*Postcondition: returns IAE if the source store has not enough TradeItems 
+					 for the order at the targeted date*/
 	private void check() {
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
 			if(e.getValue() > source.getAmount(e.getKey(), targetDate)){
