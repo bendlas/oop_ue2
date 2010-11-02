@@ -2,24 +2,31 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: remove comments
+//TODO: remove comments in project
 public class Test {
 
 	/**
 	 * @param args
 	 */
+	//postcondition: program is executed
 	public static void main(String[] args){
 		test1();
 	}
 	
+	//precondition: param units >= 0
+	//postcondition: new Date is returned
 	static Date in(long units) {
 		return new Date(System.currentTimeMillis() + units * 10000);
 	}
 	
+	//postcondition: string s is printed followed by a break
 	static void pr(String s){
 		System.out.println(s);
 	}
 	
+	//TODO: check postcond
+	/*postcondition: String output if tests are successful;
+					 Exception is thrown if workflow doesn't work*/
 	public static void test1() {
 		pr("### StrikeTeam Testsuite 2000 by Babz");
 		/*
