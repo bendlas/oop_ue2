@@ -38,17 +38,9 @@ public class Configuration extends TradeItem {
 		}
 	}
 	
-<<<<<<< HEAD
 	//Precondition: returns itemcollection if configuration is in store, otherwise: null, Store exists
 	//Postcondition: lookup if there enough parts in the store in order to build this config
 	//if not>>return null
-	
-=======
-	//TODO: check
-	//Precondition: store s exists, amount >= 0
-	/*Postcondition: parts for the configuration of store s are returned as itemCollection
-	 				 ONLY if there are enough items in the store to build the config*/
->>>>>>> 05fefbfd3b29ca0c12c4ac4a20280ad26a2d4d3f
 	public ItemCollection checkItems(Store s, Integer amount) {
 		ItemCollection ret = new ItemCollection();
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {

@@ -16,16 +16,9 @@ public class Order implements Comparable<Order> {
 	private Store destination;
 	private boolean active = true;
 	
-<<<<<<< HEAD
 	//Precondition: all given Variables are valid
 	//Invariable: orderDate = current Date
 	//Postcondition: sets up a new order, with date, items, and a source and target store
-
-=======
-	//Precondition: all parameters are valid
-	//Invariance: orderDate and targetDate are valid and >= currentDate
-	//Postcondition: orderDate, targetDate, items, sourceStore, destinationStore are set
->>>>>>> 05fefbfd3b29ca0c12c4ac4a20280ad26a2d4d3f
 	public Order(Date target, ItemCollection order, Store source, Store destination){
 		orderDate = new Date();
 		targetDate = target;
@@ -58,20 +51,13 @@ public class Order implements Comparable<Order> {
 	/* make the transaction from one source to target
 	 */
 	
-<<<<<<< HEAD
 	//Precondition requires the order to be in 2 (existing) stores
-	//if this order is not active IAE
-	//Postcondition: if this order is active >> removes the items from the source store
+	//if this order is not active, throws IllegalStateException
+	//Postcondition: if this order is active, removes the items from the source store
 	//and add them in the target store
 	
 	//GOOD: is simply made by using the customized Item collection, otherwise it would have been
 	//more complex to get out the products from the configurations, etc.
-=======
-	/*Precondition: requires the order status to be set as active;
-					requires items of order to be in the source store*/
-	/*Postcondition: items are withdrawed from source store and deposited
-					 in destination store and order is deleted*/
->>>>>>> 05fefbfd3b29ca0c12c4ac4a20280ad26a2d4d3f
 	public void executeOrder(){
 		if (!active) {
 			throw new IllegalStateException("Order "+this+" not active.");
