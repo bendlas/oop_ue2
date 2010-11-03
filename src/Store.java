@@ -49,6 +49,7 @@ public class Store extends ItemCollection {
 
 	//post: returned ItemCollection contains amount Products of valid choices for ProductGroup
 	//      Products are selected in a cheapest first manner as contained in Store
+	//ERROR: Products are not chosen as in specification, should take storeCosts into account
 	public ItemCollection getProductGroup(ProductGroup pg, int amount) {
 		// TODO use projected amounts
 		ItemCollection ret = new ItemCollection();
