@@ -1,18 +1,13 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-//
 public class Configuration extends TradeItem {
 	public final String name;
 
 	private ItemCollection items;
 	private Map<ProductGroup, Integer> productGroups;
 	
-	//invariance: param string is not empty
-	//postcondition: configurations' name is set
 	public Configuration(String name) {
 		super(0,0,0);
 		this.name = name;
@@ -21,8 +16,7 @@ public class Configuration extends TradeItem {
 	}
 	
 
-	//Precondition: TradeItem is valid
-	//Postcondition: adds a TradeItem in the specified amount to the Configuration
+	//post: `count` amount TradeItem is added to items comprising `this`
 	public void addTradeItem (TradeItem item, int count){
 		items.deposit(item, count);
 	}
@@ -32,7 +26,7 @@ public class Configuration extends TradeItem {
 					 already in the group, the amount is raised.*/
 	public void addProductGroup (ProductGroup pg, int count){
 		if (productGroups.containsKey(pg)) {
-			productGroups.put(pg, items.get(pg) + count);
+			productGroups.put(pg, productGroups.get(pg) + count);
 		} else {
 			productGroups.put(pg, count);
 		}
