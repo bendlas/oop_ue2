@@ -6,6 +6,7 @@ public class Configuration extends TradeItem {
 	public final String name;
 
 	private ItemCollection items;
+	//GOOD: dynamic binding, we don't care about implementation types here
 	private Map<ProductGroup, Integer> productGroups;
 	
 	public Configuration(String name) {
@@ -15,15 +16,14 @@ public class Configuration extends TradeItem {
 		productGroups = new HashMap<ProductGroup, Integer>();
 	}
 	
-
-	//post: `count` amount TradeItem is added to items comprising `this`
+	//pre: count > 0
+	//post: count amount TradeItem is added to items comprising `this`
 	public void addTradeItem (TradeItem item, int count){
 		items.deposit(item, count);
 	}
 	
-	//Precondition: Productgroup pg exists, count >= 0
-	/*Postcondition: adds Product to ProductGroup, if this product is 
-					 already in the group, the amount is raised.*/
+	//pre: count > 0
+	//post: count amount of ProductGroup is added to items comprising `this`
 	public void addProductGroup (ProductGroup pg, int count){
 		if (productGroups.containsKey(pg)) {
 			productGroups.put(pg, productGroups.get(pg) + count);
@@ -32,9 +32,10 @@ public class Configuration extends TradeItem {
 		}
 	}
 	
-	//Precondition: returns itemcollection if configuration is in store, otherwise: null, Store exists
-	//Postcondition: lookup if there enough parts in the store in order to build this config
-	//if not>>return null
+	//inv:  store is not modified
+	//post: returns an ItemCollection to build amount of `this`
+	//      chooses Items as are available in Store
+	//      returns null if Items are not available in store
 	public ItemCollection checkItems(Store s, Integer amount) {
 		ItemCollection ret = new ItemCollection();
 		for (Entry<TradeItem, Integer> e : items.entrySet()) {
@@ -60,14 +61,8 @@ public class Configuration extends TradeItem {
 		return ret;
 	}
 	
-	/* Build configuration with Items from Store
-	 * and store it back if some subconfiguration isn't stored,
-	 * it will be built too.
-	 */
-	
-	//Precondition: Store s exists
-	/*Postcondition: only if there's enough parts for it in the store, the configuration is built.
-					 and parts are withdrawed*/
+	//post: builds an instance of `this` with parts from Store and places this new instance in Store
+	//inv: Store is only modified if build is successful
 	public void buildConfiguration(Store s) {
 		ItemCollection parts = checkItems(s, 1);
 		if (parts == null) {
@@ -77,10 +72,8 @@ public class Configuration extends TradeItem {
 		s.deposit(this, 1);
 	}
 
-	//TODO: solllen wir uns noch genauer anschauen lt fabian: - was?, check "bad"
-	/*Postcondition: returns all components of the configuration as a string;
-					 components can include: products and productgroups*/
-	//BAD: doesnt show explicit, which products are in which sub-ProductGroups
+	//BAD: toString should return a short representation
+	//     listing of parts should be a separate method
 	public String toString(){
 		StringBuilder productsInGroup = new StringBuilder();
 		StringBuilder ret = new StringBuilder("Konfiguration " + name + " beinhaltet:" + "\n"+ "\n");

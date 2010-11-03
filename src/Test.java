@@ -1,42 +1,26 @@
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-//TODO: remove comments in project
 public class Test {
 
-	/**
-	 * @param args
-	 */
-	//postcondition: program is executed
+	// runs testsuite
 	public static void main(String[] args){
 		test1();
 	}
 	
-	//precondition: param units >= 0
-	//postcondition: new Date is returned
+	// returns a Date object which lies a certain amount of time units in the future
 	static Date in(long units) {
 		return new Date(System.currentTimeMillis() + units * 10000);
 	}
 	
-	//postcondition: string s is printed followed by a break
 	static void pr(String s){
 		System.out.println(s);
 	}
 	
-	//TODO: check postcond
-	/*postcondition: String output if tests are successful;
-					 Exception is thrown if workflow doesn't work*/
+	// String output if tests are successful;
+	// Exception is thrown if workflow doesn't work
 	public static void test1() {
 		pr("### StrikeTeam Testsuite 2000 by Babz");
-		/*
-		 * Company/Store Tree:
-		 * -------------------
-		 * DoItYourself
-		 * - Lager1
-		 * - Lager2
-		 * - HTL
-		 */
+
 		Company doItYourself = new Company("DoItYourself");
 		pr("Creating 3 Stores");
 		Store s1 = new Store("Lager1");
@@ -49,38 +33,6 @@ public class Test {
 		doItYourself.addStore(s1);
 		doItYourself.addStore(s2);
 		doItYourself.addStore(s3);
-		
-		/*
-		 * Product(group) Tree:
-		 * --------------------
-		 * Computer
-		 * - XTremGeek
-		 * - DreamNerdXT
-		 * - HyperCipher
-		 * 	- Monitor
-		 * 		- R2D2
-		 * 		- R3D3
-		 * 		- MasterView
-		 * 	- Speicherplatten
-		 * 		- Ram
-		 * 		- Rom
-		 * 		- Cache
-		 * 	- Zubehoer
-		 * 		- Keyboard
-		 * 		- Mouse
-		 * 		- CoolingSystem
-		 * Laptop
-		 * - PowerPlotter3
-		 * - PearNotApple
-		 * - TEEBook
-		 * 	- Festplatten
-		 * 		- interne Festplatten
-		 * 			- UFF123
-		 * 			- BAM654
-		 * 		- externe Festplatten
-		 * 			- PUH345
-		 * 			- ARG789
-		 */
 		
 		pr("adding productgroups with prizes");
 		//productgroups available
@@ -172,36 +124,7 @@ public class Test {
 		
 		doItYourself.addProductGroup(comp);
 		doItYourself.addProductGroup(laptop);
-		
-		//fill stores
-		/* deposit @ startup:
-		 * s1:
-		 * - laptop t13, 4
-		 * - laptop t14, 3
-		 * - laptop t15, 3
-		 * - monitor t4, 6
-		 * - monitor t6, 4
-		 * - internalHarddisc t17, 2
-		 * - pG storage t22, 5
-		 * s2:
-		 * - comp t1, 3
-		 * - comp t2, 3
-		 * - comp t3, 3
-		 * - monitor t5, 6
-		 * - mouse t11, 7
-		 * - internalHarddisc t16, 4
-		 * - config t20, 4
-		 * s3:
-		 * - pG monitor t21, 1
-		 * - keyboard t10, 4
-		 * - rom t8, 3
-		 * - ram t7, 5
-		 * - cache t9, 7
-		 * - coolingSystem t12, 5
-		 * - externalHarddisc t18, 5
-		 * - externalHarddisc t19, 5
-		 * - monitor t5, 3
-		 */
+
 		s1.deposit(t13, 4); //laptop
 		s1.deposit(t14, 3); //laptop
 		s1.deposit(t15, 3); //laptop

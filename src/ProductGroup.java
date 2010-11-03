@@ -14,26 +14,22 @@ public class ProductGroup{
 	private Set<ProductGroup> subProdGroup = new HashSet<ProductGroup>();
 	public final String name;
 	
-	//precondition: name is not empty
-	//postcondition: a name for the productgroup is set
 	public ProductGroup(String name){
 		this.name = name;
 	}
 	
-	//precondition: product p exists
-	//postcondition: product p is added
+	//post: Product is added to choices for ProductGroup
 	public void addProduct(Product p){
 		products.add(p);
 	}
 
-	//precondition: productgroup pG exists
-	//postcondition: productgroup pG is added as a subproductgroup
+	//post: argument ProductGroup is added to choices for this ProductGroup
 	public void addSubProductGroup(ProductGroup pG){
 		subProdGroup.add(pG);
 	}
 	
-	//Precondition: product p exists
-	//Postcondition: product p is removed
+	//pre: Product is a valid choice for ProductGroup
+	//post: Product is removed from choices
 	public void removeProduct(Product p){
 		if(!products.contains(p)){
 			throw new IllegalArgumentException("Group doesn't contain required product");
@@ -41,8 +37,8 @@ public class ProductGroup{
 		products.remove(p);
 	}
 
-	//Precondition: pG doesn't contain products
-	//Postcondition: productgroup pG is removed
+	//pre: argument ProductGroup is empty and a valid choice for this ProductGroup
+	//post: argument ProductGroup is removed from choices
 	public void removeProduct(ProductGroup pG){
 		if(!subProdGroup.isEmpty()){
 			throw new IllegalArgumentException("Subgroup contains products - cannot be deleted");
@@ -50,10 +46,9 @@ public class ProductGroup{
 		subProdGroup.remove(pG);
 	}
 
-	//TODO check precond and "good"
-	//GOOD: weniger Abhängigkeit durch nicht spezifizierung des Sets
-	//precondition: set p is empty
-	//postcondition: all products of the group and those of the subgroup are returned as a set
+	//GOOD: dynamic binding, weniger Abhängigkeit durch nicht spezifizierung des Sets
+	//pre: Set contains only Products from this ProductGroup (or sub)
+	//post: the argument Set is returned with Products from this-  and sub- ProductGroups added
 	private Set<Product> getProducts(Set<Product> p) {
 		p.addAll(products);
 		for (ProductGroup sub : subProdGroup) {
@@ -62,10 +57,8 @@ public class ProductGroup{
 		return p;
 	}
 
-	/* Get products sorted by price
-	 */
-	//precondition: every product has a price of the type bigdecimal
-	//postcondition: all products sorted by the price are returned as a list
+	//GOOD: dynamic binding, Collections.sort on an ArrayList
+	//post: return List contains all Products as in getProducts sorted by price
 	public List<Product> getSortByPrice() {
 		List<Product> ret = new ArrayList<Product>(products);
 		ret.addAll(getProducts(new HashSet<Product>()));
@@ -73,10 +66,10 @@ public class ProductGroup{
 		return ret;
 	}
 
-	//TODO: check postcond 
-	//postcondition:Override, all products of one productgroup are returned as a string
+	//BAD: should be named e.g. listItems
 	public String toString(boolean printProducts){
 		StringBuilder buf = new StringBuilder();
+		//GOOD: dynamic binding, we only care about the Set _interface_
 		Set<Product> pset = getProducts(new HashSet<Product>());
 		for (Product p : pset) {
 			buf.append(p.toString());
@@ -85,9 +78,7 @@ public class ProductGroup{
 		return buf.toString();
 	}
 	
-	//postcondition: the name of the productgroup is returned
 	public String toString(){
 		return name;
 	}
-
 }
